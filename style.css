@@ -1,6 +1,7 @@
 * {
     font-family: "Roboto", "Arial";
     box-sizing: border-box;
+    transition: .3s;
 }
 
 h1 {
@@ -34,14 +35,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.2s color;
 }
 
 .bit {
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    transition: 0.2s;
 }
 .time {
     width: 100px;
