@@ -1,22 +1,49 @@
 let cols = document.getElementsByClassName("col");
 let rows = [2, 4, 3, 4, 3, 4];
 let time;
-let light = "#ff00ff"//"rgb(255, 0, 255)";
-let dark = "rgb(120, 0, 120)";
-let textLight = "rgb(200, 200, 200";
+let light = ["rgb(0, 255, 50)", "rgb(0, 255, 255)", "rgb(255, 0, 255)"];
+let dark = ["rgb(0, 124, 50)", "rgb(0, 120, 120)", "rgb(120, 0, 120)"];
+let color = 1;
+
 
 window.onload = function () {
+    let colorChoice = document.getElementById("color-choice");
+
+    let colorElem = document.createElement("div");
+    colorElem.className = "color";
+
+    let circle = document.createElement("div");
+    circle.className = "circle";
+
+    colorElem.appendChild(circle);
+
+    for (let i = 0; i < light.length; i++) {
+        colorChoice.appendChild(colorElem);
+
+        colorElem.children[0].style.background = light[i];
+        colorElem.children[0].style.borderColor = dark[i];
+
+        colorElem = colorElem.cloneNode(true);
+    }
+
+    let colors = Array.from(document.getElementsByClassName("color"));
+
+    colors.forEach(elem => {
+        elem.addEventListener("click", function () {
+            color = colors.indexOf(elem);
+
+            setColor();
+        })
+    })
+
+
     for (let i = 0; i < 6; i++) {
         let col = cols[i];
 
         let block = document.createElement("div");
         block.className = "block";
-        block.style.color = light;
 
         for (let j = 0; j < 4; j++) {
-            // if (i == 5) {
-            //     block.style.borderRight = "3px solid" + light;
-            // }
             col.appendChild(block);
             block = block.cloneNode(true);
         }
@@ -34,17 +61,9 @@ window.onload = function () {
         time.className = "time";
         col.appendChild(time);
     }
-    let timeBlocks = document.getElementsByClassName("time");
 
-    for (let i = 0; i < 6; i++) {
-        timeBlocks[i].style.color = light;
-        timeBlocks[i].style.borderColor = light;
-    }
-    for(let i = 0; i < 4; i++) {
-        cols[6].children[i].style.color = light;
-    }
 
-    
+    setColor();
 
     setInterval( () => {
         let date = new Date();
@@ -53,7 +72,8 @@ window.onload = function () {
         let s = (date.getSeconds().toString().length == 2) ? date.getSeconds().toString() : "0" + date.getSeconds().toString();
         
         time = h + m + s;
-        
+
+        let timeBlocks = document.getElementsByClassName("time");
 
         for (let i = 0; i < 6; i++) {
             timeBlock = timeBlocks[i];
@@ -66,8 +86,9 @@ window.onload = function () {
             }
             timeBlock.innerText = time[i];
 
+            let colon = document.createElement("p");
+
             if (i == 1 || i == 3) {
-                let colon = document.createElement("p");
                 colon.className = "colon"; 
                 colon.innerText = ":";
 
@@ -83,13 +104,30 @@ window.onload = function () {
                 let currentBit = cols[i].children[j].children[0];
 
                 if (binary[j] == "1") {
-                    currentBit.style.background = light;
+                    currentBit.style.background = light[color];
                 }
                 else if (!binary[j] || binary[j] == "0") {
-                    currentBit.style.background = dark;
+                    currentBit.style.background = dark[color];
                 }
             }
         }
     }, 100/3);
 }
 
+function setColor () {
+    let blocks = document.getElementsByClassName("block");
+    let timeBlocks = document.getElementsByClassName("time");
+
+    for (let i = 0; i < 6; i++) {
+        let block = blocks[i];
+        let timeBlock = timeBlocks[i];
+
+        block.style.color = light[color];
+        timeBlock.style.color = light[color];
+        timeBlock.style.borderColor = light[color];
+    }
+
+    for(let i = 0; i < 4; i++) {
+        cols[6].children[i].style.color = light[color];
+    }
+}
