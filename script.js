@@ -105,8 +105,7 @@ window.onload = function () {
 
                 if (binary[j] == "1") {
                     currentBit.style.background = light[color];
-                }
-                else if (!binary[j] || binary[j] == "0") {
+                } else {
                     currentBit.style.background = dark[color];
                 }
             }
