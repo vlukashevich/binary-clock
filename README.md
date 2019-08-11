@@ -1,3 +1,3 @@
 # binary-clock
-Simple binary clock made with vanilla JavaScript with no Canvas
+Simple binary clock made with vanilla JavaScript and with no Canvas
 
